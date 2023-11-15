@@ -1,0 +1,27 @@
+Altura do cubo: 100 m
+
+O projeto será feito para uma turbina de eixo horizontal (Horizontal Axis Wind Turbine, HAWT), esse tipo de turbina possui manutenção mais fácil devido o seu projeto mais imples quando comparada às turbinas de eixo vertical (Vertical Axis Wind Turbine, VAWT).
+Além disso as HAWTs costumam gerar mais potência, visto que suas pás geralmente são posicionadas em alturas mais elevadas, já as VAWTs por vezes são posicionadas com pás mais próximas à superfície do solo.
+Outro aspecto levado em conta a favor da escolha de uma HAWT é o custo, esse tipo de turbina é mais difundido e mais comumente produzido, ocasionando em peças mais acessíveis e baratas.
+citar: https://www.inverter.com/vertical-or-horizontal-wind-turbines-which-is-better
+https://commons.clarku.edu/cgi/viewcontent.cgi?article=1158&context=idce_masters_papers#:~:text=Horizontal%20axis%20wind%20turbines%20(HAWTs)%20are%20the%20dominant%20wind%20gathering,through%20a%20rotation%20%5B14%5D.
+
+Com a intenção de puramente diminuir a turbulência e evitar que uma pá da turbina afete o fluxo de vento nas outras, uma turbina de uma pá seria o ideal, porém esse projeto não é factível estruturalmente, e leva a instabilidade e desequilíbrio.
+Uma turbina com duas pás seria melhor construtivamente enquanto mantém uma interferência mais baixa no fluxo entre as pás, porém máquinas com duas pás quando rotacionadas junto ao vento sofrem do efeito de "vibração de guinada" (Yaw chatter), que causa vibração na estrutura quando as pás se encontram horizontais em relação ao solo.
+Sendo assim, o número de pás escolhido para as turbinas é três, visto que não sofrem dos mesmos problemas construtivos das turbinas de uma pá ou dos problemas de vibração de turbinas com duas pás, enquanto ainda tem uma interferência mais baixa no fluxo de vento que passa pelas mesmas quando comparada à turbinas com números de pás mais elevadas, e com velocidades de rotação menores.
+citar: https://www.ndsu.edu/pubweb/~klemen/Common_Terminology.htm
+
+A velocidade média em 100 m (altura do cubo) é de 10,5 m/s, é razoável adotar como velocidade nominal um valor entre 1,4 e 2 vezes essa velocidade, pegando o ponto médio, é adotado um fator de 1,7, sendo assim, a velocidade nominal do vento que será utilizada é de 17,85 m/s.
+
+Idealmente a razão de velocidade de ponta (Tip Speed Ratio, TSR), deve ser determinada em testes de campo ou simulações, neste projeto, por simplicidade, iremos adotar valores comumente encontrados na literatura para HAWTs similares à que será projetada, desta forma o TSR escolhido para o projeto foi de 7.
+citar: https://pdfs.semanticscholar.org/09ad/1056ec9eb5e6826fe3410d22dc1edb0361cf.pdf
+
+O aerofólio escolhido para o perfil das pás da turbina foi o NACA 4415, a Tabela (x) exibe as coordenadas x, y adimensionais do aerofólio escolhido. Multiplicando esse valor pelo comprimento da corda escolhida chegamos nas coordenadas reais.
+mostrar: plot no python ou qblade
+
+Embora uma turbina de eixo horizontal possa ser classificada como de sustentação ou como de arrasto, respectivamente se a força que gera o torque for principalmente de sustentação ou de arrasto, o efeito que desejamos maximizar é o da força de sustentação, desta forma maximizaremos a razão Cl/Cd (Coeficiente de sustentação, lift, e coeficiente de arrasto, drag). Observando o gráfico da razão Cl/Cd contra ângulo de ataque podemos ver que o valor máximo da razão se aproxima de 120, essa razão ocorre para um ângulo de ataque próximo de 6°. Usando o gráfico de Cl contra ângulo de ataque vemos que para um valor de alfa = 6°, o coeficiente de sustentação assume o valor de 1,15, olhando o gráfico do coeficiente de arrasto contra ângulo de ataque, vemos que para um valor de 6° o coeficiente de arrasto é de aproximadamente 0,1. Daí tiramos a razão Cl/Cd = 115 que será usada para os próximos cálculos e que se aproxima do primeiro valor obtido por inspeção, razão de 120 do primeiro gráfico. Os dados foram obtidos usando o AirfoilTools considerando um número de Reynolds (razão entre forças inerciais e viscosas) de 1 milhão, esse valor foi o escolhido pois entre os disponíveis na plataforma, era o que trazia a maior razão sustentação/arrasto.
+
+O coeficiente de potência máximo é dado por [colocar equação aqui], podemos calcular phi com a fórmula 2/3 tan^-1(1/TSR) = 5,42°, calculando então o Cp máximo chegamos em \approx 51,66\%
+
+Usando a fórmula da potência da turbina, podemos encontrar o raio da mesma, Pturbina = eficiencia_mecanica*Cp*ro*pi*R^2*velocidade_vento^3.
+Consequentemente definimos também a área varrida pelas pás da turbina, e daí tiramos que a potência nominal é menor do que a potência disponível para as turbinas, o que já é esperado.
