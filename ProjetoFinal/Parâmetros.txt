@@ -16,12 +16,31 @@ A velocidade média em 100 m (altura do cubo) é de 10,5 m/s, é razoável adota
 Idealmente a razão de velocidade de ponta (Tip Speed Ratio, TSR), deve ser determinada em testes de campo ou simulações, neste projeto, por simplicidade, iremos adotar valores comumente encontrados na literatura para HAWTs similares à que será projetada, desta forma o TSR escolhido para o projeto foi de 7.
 citar: https://pdfs.semanticscholar.org/09ad/1056ec9eb5e6826fe3410d22dc1edb0361cf.pdf
 
-O aerofólio escolhido para o perfil das pás da turbina foi o NACA 4415, a Tabela (x) exibe as coordenadas x, y adimensionais do aerofólio escolhido. Multiplicando esse valor pelo comprimento da corda escolhida chegamos nas coordenadas reais.
+O aerofólio escolhido para o perfil das pás da turbina foi o NACA 4415, a Tabela [colocar tabela] exibe as coordenadas x, y adimensionais do aerofólio escolhido. Multiplicando esse valor pelo comprimento da corda escolhida chegamos nas coordenadas reais.
 mostrar: plot no python ou qblade
 
 Embora uma turbina de eixo horizontal possa ser classificada como de sustentação ou como de arrasto, respectivamente se a força que gera o torque for principalmente de sustentação ou de arrasto, o efeito que desejamos maximizar é o da força de sustentação, desta forma maximizaremos a razão Cl/Cd (Coeficiente de sustentação, lift, e coeficiente de arrasto, drag). Observando o gráfico da razão Cl/Cd contra ângulo de ataque podemos ver que o valor máximo da razão se aproxima de 120, essa razão ocorre para um ângulo de ataque próximo de 6°. Usando o gráfico de Cl contra ângulo de ataque vemos que para um valor de alfa = 6°, o coeficiente de sustentação assume o valor de 1,15, olhando o gráfico do coeficiente de arrasto contra ângulo de ataque, vemos que para um valor de 6° o coeficiente de arrasto é de aproximadamente 0,1. Daí tiramos a razão Cl/Cd = 115 que será usada para os próximos cálculos e que se aproxima do primeiro valor obtido por inspeção, razão de 120 do primeiro gráfico. Os dados foram obtidos usando o AirfoilTools considerando um número de Reynolds (razão entre forças inerciais e viscosas) de 1 milhão, esse valor foi o escolhido pois entre os disponíveis na plataforma, era o que trazia a maior razão sustentação/arrasto.
 
 O coeficiente de potência máximo é dado por [colocar equação aqui], podemos calcular phi com a fórmula 2/3 tan^-1(1/TSR) = 5,42°, calculando então o Cp máximo chegamos em \approx 51,66\%
 
-Usando a fórmula da potência da turbina, podemos encontrar o raio da mesma, Pturbina = eficiencia_mecanica*Cp*ro*pi*R^2*velocidade_vento^3.
-Consequentemente definimos também a área varrida pelas pás da turbina, e daí tiramos que a potência nominal é menor do que a potência disponível para as turbinas, o que já é esperado.
+Usando a fórmula da potência da turbina, podemos encontrar o raio da mesma, Pturbina = 1/2*eficiencia_mecanica*Cp*ro*pi*R^2*velocidade_vento^3.
+R = sqrt(Pturbina/(1/2*eficiencia_mecanica*Cp*ro*pi*velocidade_vento^3)) = 32,23 m, logo o diâmetro da turbina é de D = 2*R = 64,46 m.
+
+Consequentemente definimos também a área varrida pelas pás da turbina, A = pi*R^2 = 3263,85 m^2.
+
+Também podemos calcular a potência disponível para a turbina com a expressão:
+P = Cp*1/2*ro*pi*R^2*velocidade_vento = 5,3 MW, valor superior ao nominal, dando uma margem de segurança para o projeto.
+
+Como parte da energia cinética do vento é convertida em energia elétrica pelo aerogerador, há um decréscimo de velocidade na região diretamente após a turbina, a chamada "esteira", fato que dificulta o posicionamento de vários aerogeradores próximos uns dos outros. Dessa forma é recomendado que as turbinas sejam distribuidas com distâncias de ao menos 10 diâmetros na direção da velocidade do vento e ao menos 5 diâmetros transversalmente.
+Sabendo o diâmetro de uma turbina podemos calcular então a distância de separação:
+
+D_vento = 10*D = 644,6 m
+D_transversal = 5*D = 322,3 m
+
+Com base nas distâncias mínimas calculadas fazemos então a distribuição das 6 turbinas no terreno escolhido: [imagem das turbinas]
+
+Com base na distribuição dos aerogeradores, temos que a área necessária para a realização do projeto é:
+A_necessária = 11*D*11*D = 502,77 km^2
+
+Por razões estruturais, no caso a fixação da base das pás no aerogerador, é necessário realizar uma divisão entre o projeto entre as partes aerodinâmica e estrutural das pás. Separamos 15% do comprimento da pá para a fixação, temos então L_aerodinâmico = 85%*32,23 m = 27,4 m. Existem diversas formas de dimensionar o tamanho da corda da pá de maneira ótima, uma estratégia eficiente é separar a pá em múltiplos perfis a cada 1 m, por exemplo, e dimensionar a corda de cada um desses perfis com base no seu raio. Como o comprimento da parte aerodinâmica da turbina projetada é de 27,4 m, iremos calcular 28 perfis aerodinâmicos, um a cada aproximadamente 1 metro.
+
