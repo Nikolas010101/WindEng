@@ -44,3 +44,5 @@ A_necessária = 11*D*11*D = 502,77 km^2
 
 Por razões estruturais, no caso a fixação da base das pás no aerogerador, é necessário realizar uma divisão entre o projeto entre as partes aerodinâmica e estrutural das pás. Separamos 15% do comprimento da pá para a fixação, temos então L_aerodinâmico = 85%*32,23 m = 27,4 m. Existem diversas formas de dimensionar o tamanho da corda da pá de maneira ótima, uma estratégia eficiente é separar a pá em múltiplos perfis a cada 1 m, por exemplo, e dimensionar a corda de cada um desses perfis com base no seu raio. Como o comprimento da parte aerodinâmica da turbina projetada é de 27,4 m, iremos calcular 28 perfis aerodinâmicos, um a cada aproximadamente 1 metro.
 
+Usaremos o dimensionamento de Schmitz para obter o comprimento da corda para cada um dos 28 pontos, já que os efeitos de esteira são levados em conta nesse modelo. A equação da corda em função do raio é:
+c = 16*pi*r*(sen(arctan(R/(TSR*r))/3)^2)/(n_pás*Cl)
